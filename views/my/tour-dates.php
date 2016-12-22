@@ -82,19 +82,11 @@
             </div>
             <article class="grid_4 alpha">
                 <div class="padding-grid-3">
-                    <h3>Past <strong>Tours</strong></h3>
+                    <h3>Latest <strong>News</strong></h3>
                     <ul class="list-3">
-                        <li><a href="#">Lorem ipsum dolor consctetur</a></li>
-                        <li><a href="#">Adipisicing eusmod tempor incididunt</a></li>
-                        <li><a href="#">Dolore magna aliqua enim ad minim</a></li>
-                        <li><a href="#">Quis nostrud exercitation ullamco laboris</a></li>
-                        <li><a href="#">Nisi ut aliquip ex ea commodo</a></li>
-                        <li><a href="#">Duis aute irure dolor in reprehenderit</a></li>
-                        <li><a href="#">Coluptate velit esse cillum</a></li>
-                        <li><a href="#">Dolore eu fugiat nulla pariatur</a></li>
-                        <li><a href="#">Excepteur sint occaecat cupidatat</a></li>
-                        <li><a href="#">Sunt in culpa qui officia</a></li>
-                        <li><a href="#">Deserunt mollit anim id est laborum</a></li>
+                        <?foreach($news as $nw):?>
+                            <li><a href="<?= \yii\helpers\Url::to(['my/news', 'id' => $nw->id]) ?>"><?=$nw->name?></a></li>
+                        <?endforeach;?>
                     </ul>
                 </div>
             </article>

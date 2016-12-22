@@ -53,6 +53,7 @@ $config = [
                     'route' => 'my/about',
                     'suffix' => ''
                 ],
+                'news/<id:\d+>' => 'my/news',
                 '<action>' => 'my/<action>',
             ],
         ],
