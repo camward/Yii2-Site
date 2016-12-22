@@ -2,6 +2,9 @@
 
 namespace app\controllers;
 
+use Yii;
+use app\models\Video;
+
 class MyController extends AppController
 {
     public function actionAbout()
@@ -55,7 +58,8 @@ class MyController extends AppController
         $this->view->registerMetaTag(['name'=>'keywords', 'content'=>'ключевые слова']);
         $this->view->registerMetaTag(['name'=>'description', 'content'=>'описание страницы']);
 
-        return $this->render('video');
+        $video = Video::find()->all();
+        return $this->render('video', compact('video'));
     }
 
 }
