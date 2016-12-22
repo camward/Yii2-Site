@@ -8,6 +8,7 @@
 namespace app\assets;
 
 use yii\web\AssetBundle;
+use yii\web\View;
 
 /**
  * @author Qiang Xue <qiang.xue@gmail.com>
@@ -37,7 +38,9 @@ class AppAsset extends AssetBundle
         'js/jquery.prettyPhoto.js',
         'js/tms-0.3.js',
         'js/tms_presets.js',
-        'js/index.js',
+    ];
+    public $jsOptions = [
+        'position' => View::POS_HEAD
     ];
     public $depends = [
         'yii\bootstrap\BootstrapAsset',

@@ -53,6 +53,9 @@ AppAsset::register($this);
                     </div>
                 </div>
             </nav>
+            <?if(isset($this->blocks['indexSlider'])):?>
+                <?echo $this->blocks['indexSlider'];?>
+            <?endif;?>
         </div>
     </header>
     <!--==============================content================================-->
@@ -72,11 +75,11 @@ AppAsset::register($this);
                     <div class="grid_12">
                         <div class="footer-padding">
                             <div class="wrapper">
-                                <span class="footer-link"><span>Alex St &copy; 2016</span> <a rel="nofollow" target="_blank" class="link" href="http://google.com/">RockBand.com</a> - сайт музыкальной группы</span>
+                                <span class="footer-link"><span><a class="link" href="<?=Url::home()?>">RockBand.com</a></span>Site for Music Group</span>
                                 <?php echo FooterWidget::widget();?>
                             </div>
                             <div class="aligncenter">
-                                <!-- {%FOOTER_LINK} -->
+                                Alex St &copy; 2016
                             </div>
                         </div>
                     </div>
