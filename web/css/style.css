@@ -108,7 +108,7 @@ h1 a {
 .menu {
 	padding:10px 0 10px 0; 
 	width:100%;
-	height:40px;
+	height:60px;
 	overflow:hidden;
 }
 .menu li {
@@ -129,8 +129,8 @@ h1 a {
 	color:#fff;
 	letter-spacing:-1px;
 }
-.menu li a.active,
-.menu li a:hover {color:#93ceee}
+.menu li.active a,
+.menu li a:hover {color:#93ceee; background: none!important;}
 
 
 /********Slider********/
