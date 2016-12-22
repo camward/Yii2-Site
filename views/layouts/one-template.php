@@ -4,6 +4,7 @@ use yii\helpers\Html;
 use app\assets\AppAsset;
 use yii\bootstrap\Nav;
 use yii\helpers\Url;
+use app\components\FooterWidget;
 
 AppAsset::register($this);
 ?>
@@ -72,11 +73,7 @@ AppAsset::register($this);
                         <div class="footer-padding">
                             <div class="wrapper">
                                 <span class="footer-link"><span>Alex St &copy; 2016</span> <a rel="nofollow" target="_blank" class="link" href="http://google.com/">RockBand.com</a> - сайт музыкальной группы</span>
-                                <ul class="list-services">
-                                    <li><a class="tooltips n-1" title="Twitter" href="#"></a></li>
-                                    <li><a class="tooltips n-2" title="Facebook" href="#"></a></li>
-                                    <li class="last"><a class="tooltips n-3" title="Youtube" href="#"></a></li>
-                                </ul>
+                                <?php echo FooterWidget::widget();?>
                             </div>
                             <div class="aligncenter">
                                 <!-- {%FOOTER_LINK} -->
