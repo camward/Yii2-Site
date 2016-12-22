@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use Yii;
 use app\models\Video;
+use app\models\Gallery;
 
 class MyController extends AppController
 {
@@ -40,7 +41,8 @@ class MyController extends AppController
         $this->view->registerMetaTag(['name'=>'keywords', 'content'=>'ключевые слова']);
         $this->view->registerMetaTag(['name'=>'description', 'content'=>'описание страницы']);
 
-        return $this->render('gallery');
+        $images = Gallery::find()->all();
+        return $this->render('gallery', compact('images'));
     }
 
     public function actionTourDates()

@@ -23,24 +23,12 @@ $this->registerJsFile('@web/js/gallery.js', ['position' => View::POS_BEGIN]);
                         </div>
                         <div id="thumbs" class="navigation">
                             <ul class="thumbs noscript">
-                                <li>
-                                    <a class="thumb" href="images/page4-img1.jpg" title=""> <img src="images/thumb-1.jpg" alt="" /> </a>
-                                </li>
-                                <li>
-                                    <a class="thumb" href="images/page4-img2.jpg" title=""> <img src="images/thumb-2.jpg" alt="" /> </a>
-                                </li>
-                                <li class="last">
-                                    <a class="thumb" href="images/page4-img3.jpg" title=""> <img src="images/thumb-3.jpg" alt="" /> </a>
-                                </li>
-                                <li>
-                                    <a class="thumb" href="images/page4-img2.jpg" title=""> <img src="images/thumb-2.jpg" alt="" /> </a>
-                                </li>
-                                <li>
-                                    <a class="thumb" href="images/page4-img3.jpg" title=""> <img src="images/thumb-3.jpg" alt="" /> </a>
-                                </li>
-                                <li class="last">
-                                    <a class="thumb" href="images/page4-img1.jpg" title=""> <img src="images/thumb-1.jpg" alt="" /> </a>
-                                </li>
+                                <?$i = 0; foreach($images as $img):?>
+                                    <?php $i++?>
+                                    <li class="<?if($i%3 == 0):?>last<?endif;?>">
+                                        <a class="thumb" href="images/<?=$img->big?>"> <img src="images/<?=$img->thumb?>" /> </a>
+                                    </li>
+                                <?endforeach;?>
                             </ul>
                             <div class="clear"></div>
                         </div>
