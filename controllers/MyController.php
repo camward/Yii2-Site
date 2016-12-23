@@ -8,6 +8,7 @@ use app\models\Gallery;
 use app\models\News;
 use app\models\Tour;
 use app\models\Album;
+use app\models\Contact;
 
 class MyController extends AppController
 {
@@ -40,7 +41,18 @@ class MyController extends AppController
         $this->view->registerMetaTag(['name'=>'keywords', 'content'=>'ключевые слова']);
         $this->view->registerMetaTag(['name'=>'description', 'content'=>'описание страницы']);
 
-        return $this->render('contacts');
+        $model = new Contact();
+        if($model->load(Yii::$app->request->post())){
+            if($model->validate()){
+                Yii::$app->session->setFlash('success', 'Ваше сообщение отправлено');
+                return $this->refresh();
+            }
+            else{
+                Yii::$app->session->setFlash('error', 'Ошибка при отправке сообщения');
+            }
+        }
+
+        return $this->render('contacts', compact('model'));
     }
 
     public function actionGallery()

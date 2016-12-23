@@ -1,30 +1,40 @@
+<?
+use yii\widgets\ActiveForm;
+use yii\helpers\Html;
+?>
+
 <div class="content-padding-2">
     <div class="container_12">
         <div class="wrapper">
             <article class="grid_8">
                 <div class="padding-grid-1">
                     <h3>Contact <strong>Form</strong></h3>
-                    <form id="contact-form" enctype="multipart/form-data" method="post" >
-                        <fieldset>
-                            <label>
-                                <span class="name-input">Name:</span>
-                                <input name="name" value="" onBlur="if(this.value=='') this.value=''" onFocus="if(this.value =='' ) this.value=''" />
-                            </label>
-                            <label>
-                                <span class="name-input">Email:</span>
-                                <input name="name1" value="" onBlur="if(this.value=='') this.value=''" onFocus="if(this.value =='' ) this.value=''" />
-                            </label>
-                            <label>
-                                <span class="name-input">Message:</span>
-                                <textarea onBlur="if(this.value=='') this.value=''" onFocus="if(this.value =='' ) this.value=''"></textarea>
-                            </label>
-                        </fieldset>
-                        <div class="link-form">
-                            <a class="link link-margin" href="#" onClick="document.getElementById('contact-form').reset()">Clear</a>
-                            <a class="link" href="#" onClick="document.getElementById('contact-form').submit()">Send</a>
+
+                    <?if(Yii::$app->session->hasFlash('success')):?>
+                        <div class="alert alert-success alert-dismissable">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                            <?=Yii::$app->session->getFlash('success')?>
                         </div>
-                        <div class="clear"></div>
-                    </form>
+                    <?endif;?>
+                    <?if(Yii::$app->session->hasFlash('error')):?>
+                        <div class="alert alert-danger alert-dismissable">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                            <?=Yii::$app->session->getFlash('error')?>
+                        </div>
+                    <?endif;?>
+
+                    <?$form = ActiveForm::begin();?>
+                    <fieldset>
+                        <?=$form->field($model, 'name')?>
+                        <?=$form->field($model, 'email')?>
+                        <?=$form->field($model, 'text')->textarea(['rows' => 10])?>
+                    </fieldset>
+                    <div class="link-form">
+                        <?=Html::resetButton('Очистить', ['class' => 'btn btn-default btn-sm'])?>
+                        <?=Html::submitButton('Отправить', ['class' => 'btn btn-primary btn-sm'])?>
+                    </div>
+                    <div class="clear"></div>
+                    <?ActiveForm::end();?>
                 </div>
             </article>
             <article class="grid_4 alpha">

@@ -43,6 +43,6 @@ class AppAsset extends AssetBundle
         'position' => View::POS_HEAD
     ];
     public $depends = [
-        'yii\bootstrap\BootstrapAsset',
+        'yii\bootstrap\BootstrapPluginAsset',
     ];
 }
