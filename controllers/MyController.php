@@ -116,11 +116,7 @@ class MyController extends AppController
 
     public function actionTour($id)
     {
-        $tour_data = Yii::$app->cache->get('tour_data');
-        if(empty($tour_data)){
-            $tour_data = Tour::findOne($id);
-            Yii::$app->cache->set('tour_data', $tour_data, 60*60*24);
-        }
+        $tour_data = Tour::findOne($id);
         $this->view->title = "Концерт в " . $tour_data->city . " | " . $tour_data->date;
         $this->view->registerMetaTag(['name'=>'keywords', 'content'=>'ключевые слова']);
         $this->view->registerMetaTag(['name'=>'description', 'content'=>'описание страницы']);
@@ -144,11 +140,7 @@ class MyController extends AppController
 
     public function actionNews($id)
     {
-        $news_data = Yii::$app->cache->get('news_data');
-        if(empty($news_data)){
-            $news_data = News::findOne($id);
-            Yii::$app->cache->set('news_data', $news_data, 60*60*24);
-        }
+        $news_data = News::findOne($id);
         $this->view->title = $news_data->name;
         $this->view->registerMetaTag(['name'=>'keywords', 'content'=>'ключевые слова']);
         $this->view->registerMetaTag(['name'=>'description', 'content'=>'описание страницы']);
