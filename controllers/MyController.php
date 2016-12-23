@@ -18,10 +18,30 @@ class MyController extends AppController
         $this->view->registerMetaTag(['name'=>'keywords', 'content'=>'ключевые слова']);
         $this->view->registerMetaTag(['name'=>'description', 'content'=>'описание страницы']);
 
-        $news = News::find()->orderBy(['date'=>SORT_DESC])->limit(3)->all();
-        $tour = Tour::find()->orderBy(['date'=>SORT_DESC])->limit(3)->all();
-        $video = Video::find()->orderBy(['id'=>SORT_DESC])->limit(1)->all();
-        $album = Album::find()->orderBy(['year'=>SORT_ASC])->limit(1)->all();
+        $news = Yii::$app->cache->get('news_index');
+        if(empty($news)){
+            $news = News::find()->orderBy(['date'=>SORT_DESC])->limit(3)->all();
+            Yii::$app->cache->set('news_index', $news, 60*60);
+        }
+
+        $tour = Yii::$app->cache->get('tour_index');
+        if(empty($tour)){
+            $tour = Tour::find()->orderBy(['date'=>SORT_DESC])->limit(3)->all();
+            Yii::$app->cache->set('tour_index', $tour, 60*60);
+        }
+
+        $video = Yii::$app->cache->get('video_index');
+        if(empty($video)){
+            $video = Video::find()->orderBy(['id'=>SORT_DESC])->limit(1)->all();
+            Yii::$app->cache->set('video_index', $video, 60*60);
+        }
+
+        $album = Yii::$app->cache->get('album_index');
+        if(empty($album)){
+            $album = Album::find()->orderBy(['year'=>SORT_ASC])->limit(1)->all();
+            Yii::$app->cache->set('album_index', $album, 60*60);
+        }
+
         return $this->render('about', compact('news', 'tour', 'video', 'album'));
     }
 
@@ -31,7 +51,11 @@ class MyController extends AppController
         $this->view->registerMetaTag(['name'=>'keywords', 'content'=>'ключевые слова']);
         $this->view->registerMetaTag(['name'=>'description', 'content'=>'описание страницы']);
 
-        $audio = Album::find()->with('tracks')->orderBy(['year'=>SORT_ASC])->all();
+        $audio = Yii::$app->cache->get('audio');
+        if(empty($audio)){
+            $audio = Album::find()->with('tracks')->orderBy(['year'=>SORT_ASC])->all();
+            Yii::$app->cache->set('audio', $audio, 60*60);
+        }
         return $this->render('audio', compact('audio'));
     }
 
@@ -61,7 +85,11 @@ class MyController extends AppController
         $this->view->registerMetaTag(['name'=>'keywords', 'content'=>'ключевые слова']);
         $this->view->registerMetaTag(['name'=>'description', 'content'=>'описание страницы']);
 
-        $images = Gallery::find()->all();
+        $images = Yii::$app->cache->get('images');
+        if(empty($images)){
+            $images = Gallery::find()->all();
+            Yii::$app->cache->set('images', $images, 60*60);
+        }
         return $this->render('gallery', compact('images'));
     }
 
@@ -71,14 +99,28 @@ class MyController extends AppController
         $this->view->registerMetaTag(['name'=>'keywords', 'content'=>'ключевые слова']);
         $this->view->registerMetaTag(['name'=>'description', 'content'=>'описание страницы']);
 
-        $news = News::find()->orderBy(['date'=>SORT_DESC])->all();
-        $tour = Tour::find()->orderBy(['date'=>SORT_DESC])->all();
+        $news = Yii::$app->cache->get('news');
+        if(empty($news)){
+            $news = News::find()->orderBy(['date'=>SORT_DESC])->all();
+            Yii::$app->cache->set('news', $news, 60*60);
+        }
+
+        $tour = Yii::$app->cache->get('tour');
+        if(empty($tour)){
+            $tour = Tour::find()->orderBy(['date'=>SORT_DESC])->all();
+            Yii::$app->cache->set('tour', $tour, 60*60);
+        }
+
         return $this->render('tour-dates', compact('news', 'tour'));
     }
 
     public function actionTour($id)
     {
-        $tour_data = Tour::findOne($id);
+        $tour_data = Yii::$app->cache->get('tour_data');
+        if(empty($tour_data)){
+            $tour_data = Tour::findOne($id);
+            Yii::$app->cache->set('tour_data', $tour_data, 60*60*24);
+        }
         $this->view->title = "Концерт в " . $tour_data->city . " | " . $tour_data->date;
         $this->view->registerMetaTag(['name'=>'keywords', 'content'=>'ключевые слова']);
         $this->view->registerMetaTag(['name'=>'description', 'content'=>'описание страницы']);
@@ -92,13 +134,21 @@ class MyController extends AppController
         $this->view->registerMetaTag(['name'=>'keywords', 'content'=>'ключевые слова']);
         $this->view->registerMetaTag(['name'=>'description', 'content'=>'описание страницы']);
 
-        $video = Video::find()->all();
+        $video = Yii::$app->cache->get('video');
+        if(empty($video)){
+            $video = Video::find()->all();
+            Yii::$app->cache->set('video', $video, 60*60);
+        }
         return $this->render('video', compact('video'));
     }
 
     public function actionNews($id)
     {
-        $news_data = News::findOne($id);
+        $news_data = Yii::$app->cache->get('news_data');
+        if(empty($news_data)){
+            $news_data = News::findOne($id);
+            Yii::$app->cache->set('news_data', $news_data, 60*60*24);
+        }
         $this->view->title = $news_data->name;
         $this->view->registerMetaTag(['name'=>'keywords', 'content'=>'ключевые слова']);
         $this->view->registerMetaTag(['name'=>'description', 'content'=>'описание страницы']);
