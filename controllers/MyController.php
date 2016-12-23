@@ -7,6 +7,7 @@ use app\models\Video;
 use app\models\Gallery;
 use app\models\News;
 use app\models\Tour;
+use app\models\Album;
 
 class MyController extends AppController
 {
@@ -25,7 +26,8 @@ class MyController extends AppController
         $this->view->registerMetaTag(['name'=>'keywords', 'content'=>'ключевые слова']);
         $this->view->registerMetaTag(['name'=>'description', 'content'=>'описание страницы']);
 
-        return $this->render('audio');
+        $audio = Album::find()->with('tracks')->orderBy(['year'=>SORT_ASC])->all();
+        return $this->render('audio', compact('audio'));
     }
 
     public function actionContacts()
