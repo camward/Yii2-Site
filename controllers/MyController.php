@@ -13,11 +13,15 @@ class MyController extends AppController
 {
     public function actionAbout()
     {
-        $this->view->title = "О группе";
+        $this->view->title = "RockBand";
         $this->view->registerMetaTag(['name'=>'keywords', 'content'=>'ключевые слова']);
         $this->view->registerMetaTag(['name'=>'description', 'content'=>'описание страницы']);
 
-        return $this->render('about');
+        $news = News::find()->orderBy(['date'=>SORT_DESC])->limit(3)->all();
+        $tour = Tour::find()->orderBy(['date'=>SORT_DESC])->limit(3)->all();
+        $video = Video::find()->orderBy(['id'=>SORT_DESC])->limit(1)->all();
+        $album = Album::find()->orderBy(['year'=>SORT_ASC])->limit(1)->all();
+        return $this->render('about', compact('news', 'tour', 'video', 'album'));
     }
 
     public function actionAudio()
@@ -62,11 +66,11 @@ class MyController extends AppController
 
     public function actionTour($id)
     {
-        $this->view->title = "Концерт";
+        $tour_data = Tour::findOne($id);
+        $this->view->title = "Концерт в " . $tour_data->city . " | " . $tour_data->date;
         $this->view->registerMetaTag(['name'=>'keywords', 'content'=>'ключевые слова']);
         $this->view->registerMetaTag(['name'=>'description', 'content'=>'описание страницы']);
 
-        $tour_data = Tour::findOne($id);
         return $this->render('tour', compact('tour_data'));
     }
 
@@ -82,11 +86,11 @@ class MyController extends AppController
 
     public function actionNews($id)
     {
-        $this->view->title = "Новости";
+        $news_data = News::findOne($id);
+        $this->view->title = $news_data->name;
         $this->view->registerMetaTag(['name'=>'keywords', 'content'=>'ключевые слова']);
         $this->view->registerMetaTag(['name'=>'description', 'content'=>'описание страницы']);
 
-        $news_data = News::findOne($id);
         return $this->render('news', compact('news_data'));
     }
 

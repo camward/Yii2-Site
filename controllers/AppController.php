@@ -25,6 +25,13 @@ function debug($arr){
     echo "</pre>";
 }
 
+function truncate($str){
+    if(strlen($str) > 70)
+        echo substr($str, 0, 70).'...';
+    else
+        echo $str;
+}
+
 function getMonth($month){
     if($month == '01')
         echo 'jan';

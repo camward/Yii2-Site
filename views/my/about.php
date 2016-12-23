@@ -1,20 +1,15 @@
 <?php
 use yii\web\View;
+use app\components\SliderWidget;
+use app\components\DescriptionWidget;
+use app\components\EventsWidget;
 $this->registerJsFile('@web/js/index.js', ['position' => View::POS_BEGIN]);
 ?>
 
 <?$this->beginBlock('indexSlider');?>
     <div class="slider-wrapper">
         <div class="slider">
-            <ul class="items">
-                <li><img src="images/slider-img1.jpg" alt="" /></li>
-                <li>
-                    <img src="images/slider-img2.jpg" alt="" />
-                </li>
-                <li>
-                    <img src="images/slider-img3.jpg" alt="" />
-                </li>
-            </ul>
+            <?php echo SliderWidget::widget();?>
         </div>
     </div>
 <?$this->endBlock();?>
@@ -26,63 +21,42 @@ $this->registerJsFile('@web/js/index.js', ['position' => View::POS_BEGIN]);
                 <article class="grid_4">
                     <div class="padding-grid-1">
                         <h3 class="letter">Latest <strong>News</strong></h3>
-                        <div class="wrapper img-indent-bot1">
-                            <time class="time time-stule-1" datetime="2011-11-09"> <strong class="text-1">09</strong><strong class="text-2">nov</strong></time>
-                            <div class="extra-wrap">
-                                <div class="indent-top">
-                                    Rock Band is one of <a class="link" target="_blank" href="http://blog.templatemonster.com/free-website-templates/">free website templates</a> created by Template Monster team.
+                        <?foreach($news as $nw):?>
+                            <?$date_news = explode('-', $nw->date);?>
+                            <div class="wrapper img-indent-bot1">
+                                <time class="time time-stule-1" datetime="<?=$nw->date?>"> <strong class="text-1"><?=$date_news[2]?></strong><strong class="text-2"><?\app\controllers\getMonth($date_news[1])?></strong></time>
+                                <div class="extra-wrap">
+                                    <div class="indent-top">
+                                        <?\app\controllers\truncate($nw->description)?>
+                                        <a href="<?= \yii\helpers\Url::to(['my/news', 'id' => $nw->id]) ?>"> Подробнее</a>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="wrapper img-indent-bot1">
-                            <time class="time time-stule-1" datetime="2011-11-07"> <strong class="text-1">07</strong><strong class="text-2">nov</strong></time>
-                            <div class="extra-wrap">
-                                <div class="indent-top">
-                                    This <a class="link" target="_blank" href="http://blog.templatemonster.com/2011/11/21/free-website-template-jquery-gallery-music/ ">Rock Band Template</a> goes with two packages вЂ“ with PSD source files and without them.
-                                </div>
-                            </div>
-                        </div>
-                        <div class="wrapper">
-                            <time class="time time-stule-1" datetime="2011-11-02"> <strong class="text-1">02</strong><strong class="text-2">nov</strong></time>
-                            <div class="extra-wrap">
-                                <div class="indent-top">
-                                    PSD source files are available for free for the registered members <br />of Templates.com.
-                                </div>
-                            </div>
-                        </div>
+                        <?endforeach;?>
                     </div>
                 </article>
                 <article class="grid_4 alpha">
                     <div class="padding-grid-1">
                         <h3>Tour <strong>Dates</strong></h3>
-                        <div class="wrapper img-indent-bot2">
-                            <time class="time time-stule-2" datetime="2011-11-09"> <strong class="text-3">09</strong><strong class="text-4">nov</strong></time>
-                            <div class="extra-wrap">
-                                <h4 class="indent-top"><a href="#">New York</a></h4>
-                                Lorem ipsum dolor consctetur
+                        <?foreach($tour as $tr):?>
+                            <?$date = explode('-', $tr->date);?>
+                            <div class="wrapper img-indent-bot2">
+                                <time class="time time-stule-2" datetime="<?=$tr->date?>"> <strong class="text-3"><?=$date[2]?></strong><strong class="text-4"><?\app\controllers\getMonth($date[1])?></strong></time>
+                                <div class="extra-wrap">
+                                    <h4 class="indent-top"><a href="<?= \yii\helpers\Url::to(['my/tour', 'id' => $tr->id]) ?>"><?=$tr->city?></a></h4>
+                                    <?\app\controllers\truncate($tr->description)?>
+                                </div>
                             </div>
-                        </div>
-                        <div class="wrapper img-indent-bot2">
-                            <time class="time time-stule-2" datetime="2011-11-05"> <strong class="text-3">05</strong><strong class="text-4">nov</strong></time>
-                            <div class="extra-wrap">
-                                <h4 class="indent-top"><a href="#">Los Angeles</a></h4>
-                                Adipisicing elitdo esmod tempor
-                            </div>
-                        </div>
-                        <div class="wrapper">
-                            <time class="time time-stule-2" datetime="2011-11-01"> <strong class="text-3">01</strong><strong class="text-4">nov</strong></time>
-                            <div class="extra-wrap">
-                                <h4 class="indent-top"><a href="#">San Diego</a></h4>
-                                Lorem ipsum dolor consctetur
-                            </div>
-                        </div>
+                        <?endforeach;?>
                     </div>
                 </article>
                 <article class="grid_4 alpha">
                     <div class="padding-grid-2">
                         <h3 class="letter">In Stores <strong>Now!</strong></h3>
                         <div class="wrapper">
-                            <figure class="style-img fleft"><a href="#"><img src="images/page1-img1.jpg"  alt=""></a></figure>
+                            <?foreach($album as $al):?>
+                                <figure class="style-img fleft"><img src="images/<?=$al->images?>"></figure>
+                            <?endforeach;?>
                         </div>
                     </div>
                 </article>
@@ -96,38 +70,23 @@ $this->registerJsFile('@web/js/index.js', ['position' => View::POS_BEGIN]);
             <article class="grid_4">
                 <div class="padding-grid-1">
                     <h3>Upcoming <strong>Events</strong></h3>
-                    <div class="wrapper img-indent-bot1">
-                        <time class="time time-stule-3" datetime="2011-11-09"> <strong class="text-5">09</strong><strong class="text-6">nov</strong></time>
-                        <div class="extra-wrap">
-                            <div class="indent-top">
-                                Lorem ipsum dolor consctetur adipisicing elitdo eusmod tempor incididunt ut labore.
-                            </div>
-                        </div>
-                    </div>
-                    <div class="wrapper">
-                        <time class="time time-stule-3" datetime="2011-11-03"> <strong class="text-5">03</strong><strong class="text-6">nov</strong></time>
-                        <div class="extra-wrap">
-                            <div class="indent-top">
-                                Lorem ipsum dolor consctetur adipisicing elitdo eusmod tempor incididunt ut labore.
-                            </div>
-                        </div>
-                    </div>
+                    <?php echo EventsWidget::widget();?>
                 </div>
             </article>
             <article class="grid_4 alpha">
                 <div class="padding-grid-2">
                     <h3 class="letter">Latest <strong>Video</strong></h3>
-
                     <div class="wrapper">
-                        <figure class="style-img-2 fleft"><a class="lightbox-image" href="video/video_AS3.swf?width=495&amp;height=275&amp;fileVideo=intro06.flv" data-gal="prettyVideo[prettyVideo]"><img src="images/page1-img2.jpg"  alt=""></a></figure>
+                        <?foreach($video as $vd):?>
+                            <figure class="style-img-2 fleft"><a class="lightbox-image" href="video/video_AS3.swf?width=495&amp;height=275&amp;fileVideo=<?=$vd->video?>" data-gal="prettyVideo[prettyVideo]"><img src="images/<?=$vd->images?>"></a></figure>
+                        <?endforeach;?>
                     </div>
                 </div>
             </article>
             <article class="grid_4 alpha">
                 <div class="padding-grid-2">
                     <h3 class="letter prev-indent-bot1">Shortly <strong>About</strong></h3>
-                    <h6>Sed ut perspiciatis unde omnis</h6>
-                    Iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas aspernatur.
+                    <?php echo DescriptionWidget::widget();?>
                 </div>
             </article>
         </div>
