@@ -54,6 +54,7 @@ $config = [
                     'suffix' => ''
                 ],
                 'news/<id:\d+>' => 'my/news',
+                'tour/<id:\d+>' => 'my/tour',
                 '<action>' => 'my/<action>',
             ],
         ],

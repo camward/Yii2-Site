@@ -6,6 +6,7 @@ use Yii;
 use app\models\Video;
 use app\models\Gallery;
 use app\models\News;
+use app\models\Tour;
 
 class MyController extends AppController
 {
@@ -53,7 +54,18 @@ class MyController extends AppController
         $this->view->registerMetaTag(['name'=>'description', 'content'=>'описание страницы']);
 
         $news = News::find()->orderBy(['date'=>SORT_DESC])->all();
-        return $this->render('tour-dates', compact('news'));
+        $tour = Tour::find()->orderBy(['date'=>SORT_DESC])->all();
+        return $this->render('tour-dates', compact('news', 'tour'));
+    }
+
+    public function actionTour($id)
+    {
+        $this->view->title = "Концерт";
+        $this->view->registerMetaTag(['name'=>'keywords', 'content'=>'ключевые слова']);
+        $this->view->registerMetaTag(['name'=>'description', 'content'=>'описание страницы']);
+
+        $tour_data = Tour::findOne($id);
+        return $this->render('tour', compact('tour_data'));
     }
 
     public function actionVideo()
